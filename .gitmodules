@@ -1,7 +1,7 @@
 # Core
-[submodule "janus/vim/core/pathogen"]
-	path = janus/vim/core/pathogen
-	url = https://github.com/tpope/vim-pathogen.git
+[submodule "janus/vim/core/plug"]
+	path = janus/vim/core/plug
+	url = https://github.com/junegunn/vim-plug
 
 # Colors
 [submodule "janus/vim/colors/sampler-pack"]

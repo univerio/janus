@@ -81,7 +81,7 @@ function! janus#vim_files(folder)
   return files
 endfunction
 
-" Add a group of plug-ins to Pathogen
+" Add a group of plug-ins to plug
 "
 " @param [String] The plugin name
 " @param [String] (Optional) the base path of the group
@@ -95,59 +95,47 @@ function! janus#add_group(name, ...)
   call add(g:janus_loaded_groups, base_path . janus#separator() . a:name)
 endfunction
 
-" Prepends custom plugins first so they will end up last after pathogen loads
-" other janus groups
-function! janus#load_custom_before(path)
-  if isdirectory(g:janus_custom_path)
-    let rtp = pathogen#split(&rtp)
-    let custom = filter(pathogen#glob_directories(a:path), '!pathogen#is_disabled(v:val)')
-    let &rtp = pathogen#join(pathogen#uniq(custom + rtp))
-  endif
-endfunction
-
-" Append custom plugins 'after' directories to rtp
-function! janus#load_custom_after()
-  if isdirectory(g:janus_custom_path)
-    let rtp = pathogen#split(&rtp)
-    let custom_path = g:janus_custom_path . janus#separator() . "*" . janus#separator() . "after"
-    let custom_after  = filter(pathogen#glob_directories(custom_path), '!pathogen#is_disabled(v:val[0:-7])')
-    let &rtp = pathogen#join(pathogen#uniq(rtp + custom_after))
-
-    " Add the custom group to the list of loaded groups
-    call janus#add_group(".janus", expand("~"))
-  endif
+function! janus#infect(path)
+  let group = fnamemodify(a:path, ":t")
+  for dir in split(globpath(a:path, "*"), "\n")
+    if !isdirectory(dir)
+      continue
+    endif
+    let name = fnamemodify(dir, ":t")
+    if !janus#is_plugin_disabled(name)
+      Plug dir, { 'as': group . '/' . name }
+    endif
+  endfor
 endfunction
 
 " Load/wrap core around the rtp
 function! janus#load_core()
-  " pathogen#infect will prepend core's 'before' and append 'janus/after' to
-  " the rtp
+  " Plug will prepend core's 'before' and append 'janus/after' to the rtp
   call janus#add_group("core")
   let core = g:janus_vim_path . janus#separator() . "core"
-  call pathogen#infect(core . janus#separator() . '{}')
+  call janus#infect(core)
 endfunction
 
-" Load pathogen groups
-function! janus#load_pathogen()
-  if !exists("g:loaded_pathogen")
-    " Source Pathogen
-    exe 'source ' . g:janus_vim_path . '/core/pathogen/autoload/pathogen.vim'
+" Load plug groups
+function! janus#load_plug()
+  if !exists("g:loaded_plug")
+    " Source plug
+    exe 'source ' . g:janus_vim_path . '/core/plug/plug.vim'
   endif
 
-  " Add custom plugins before bundled groups
-  call janus#load_custom_before(g:janus_custom_path . janus#separator() . "*")
-
-  for group in g:janus_loaded_groups
-    call pathogen#infect(group . janus#separator() . '{}')
-  endfor
-
-  " Add custom plugins to override bundled groups
-  call janus#load_custom_before(g:janus_custom_path . ".before" . janus#separator() . "*")
-
-  " Add custom 'after' directories to rtp and then load the core
-  call janus#load_custom_after()
+  let groups = copy(g:janus_loaded_groups)
+  call reverse(g:janus_loaded_groups)
+  call plug#begin()
   call janus#load_core()
-  call pathogen#helptags()
+  " Add custom plugins to override bundled groups
+  call janus#infect(g:janus_custom_path . ".before")
+  for group in groups
+    call janus#infect(group)
+  endfor
+  " Add custom plugins after bundled groups
+  call janus#infect(g:janus_custom_path)
+  call plug#end()
+  call reverse(g:janus_loaded_groups)
 endfunction
 
 " Which group contains a plugin ?
@@ -191,9 +179,6 @@ function! janus#disable_plugin(...)
   endif
 
   " Verify the existance of the global variables
-  if !exists("g:pathogen_disabled")
-    let g:pathogen_disabled = []
-  endif
   if !exists("g:janus_disabled_plugins")
     let g:janus_disabled_plugins = {}
   endif
@@ -218,9 +203,6 @@ function! janus#disable_plugin(...)
 
   " Add it to janus_disabled_plugins
   let g:janus_disabled_plugins[name] = {'group': group, 'path': plugin_path, 'reason': reason}
-
-  " Add it to pathogen_disabled
-  call add(g:pathogen_disabled, name)
 endfunction
 
 " Return the plugin path
