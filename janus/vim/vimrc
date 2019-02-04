@@ -15,9 +15,66 @@ let g:janus_custom_path = expand("~/.janus")
 " Source janus's core
 exe 'source ' . g:janus_vim_path . '/core/before/plugin/janus.vim'
 
-call janus#add_group("colors")
-call janus#add_group("langs")
-call janus#add_group("tools")
+call janus#add_group("colors", [
+\  ["base16-vim", "chriskempson/base16-vim", {"commit": "c1c3e6ccb1a4cd4ea00162abb4ccece4a3e69d0b"}],
+\  ["darcula", "blueshirts/darcula", {"commit": "59203c6147e75278b0db39d6c254dcd77994a489"}],
+\  ["getafe", "larssmit/vim-getafe", {"commit": "9351d30e612ba7de188e52024656cfac66e33dca"}],
+\  ["github", "telamon/vim-color-github", {"commit": "9c452f0cbae677aab6ba6fa3305226031d80a8a6"}],
+\  ["irblack", "twerth/ir_black", {"commit": "4e45f1cbcc9c04cf32c8681c6b3b4534a33610ed"}],
+\  ["janus-colors", "TechnoGate/janus-colors", {"commit": "ae5dde8889f830b5eda6148bbe91555935385b13"}],
+\  ["molokai", "vim-scripts/molokai", {"commit": "0500e432817c4b7493fabaa272dcc8fdad29908c"}],
+\  ["pyte", "vim-scripts/pyte", {"commit": "71b654188d065ef6523bb928b148cb631cdc6111"}],
+\  ["sampler-pack", "vim-scripts/Colour-Sampler-Pack", {"commit": "05cded87b2ef29aaa9e930230bb88e23abff4441"}],
+\  ["solarized", "altercation/vim-colors-solarized", {"commit": "528a59f26d12278698bb946f8fb82a63711eec21"}],
+\  ["vim-tomorrow-theme", "chriskempson/vim-tomorrow-theme", {"commit": "46994f3a4d4574ce0d48c26a3bc1e528b8092c93"}],
+\  ["vividchalk", "tpope/vim-vividchalk", {"commit": "f52ae250297f4267c7681a42dbddfce85b63e8dc"}],
+\])
+call janus#add_group("langs", [
+\  ["csv", "chrisbra/csv.vim", {"commit": "952e177cd4ffe5d984568f81aeb2fec1b6efebad"}],
+\  ["minitest", "sunaku/vim-ruby-minitest", {"commit": "eeab4c88353555ee2115243ffc2e6cda852fd38c"}],
+\  ["nodejs", "mmalecki/vim-node.js", {"commit": "6f48575e748c22ccb3782bc02eb319b2b1b0f85d"}],
+\  ["rails", "tpope/vim-rails", {"commit": "7206033fc2d7d53a531502ecd5a044ecdacc0354"}],
+\  ["rdoc", "depuracao/vim-rdoc", {"commit": "a433c97c3cc0bd6fdcff8ea76bd78f746c5dcdb8"}],
+\  ["vim-polyglot", "sheerun/vim-polyglot", {"commit": "27903c5b8656c796564ef073c1ebe77a2f0154e1"}],
+\])
+call janus#add_group("tools", [
+\  ["ack", "mileszs/ack.vim", {"commit": "a16a9b63eb85cc0960a7f25c54647ac1f99f3360"}],
+\  ["before"],
+\  ["buffergator", "jeetsukumaran/vim-buffergator", {"commit": "04dfbc0c78b0a29b340a99d0ff36ecf8f16e017d"}],
+\  ["css-color", "ap/vim-css-color", {"commit": "2411b84298eb6db034001f35ce7cc32c36f9b43b"}],
+\  ["ctrlp", "ctrlpvim/ctrlp.vim", {"commit": "3a048e85d3c2f72b1564e2dc43ed5b1d67bd59a9"}],
+\  ["dispatch", "tpope/vim-dispatch", {"commit": "14a1695f844a320dd28a7706710325773d1046a8"}],
+\  ["easymotion", "Lokaltog/vim-easymotion", {"commit": "e4d71c7ba45baf860fdaaf8c06cd9faebdccbd50"}],
+\  ["endwise", "tpope/vim-endwise", {"commit": "d5655263af8b3611a2bcb907a9963831a88d154b"}],
+\  ["eunuch", "tpope/vim-eunuch", {"commit": "b536b887072ff3cc382842ce9f675ec222302f4f"}],
+\  ["fugitive", "tpope/vim-fugitive", {"commit": "913fff1cea3aa1a08a360a494fa05555e59147f5"}],
+\  ["gist", "mattn/gist-vim", {"commit": "f0d63579eab7548cf12f979dc52ef5a370ecbe63"}],
+\  ["gundo", "sjl/gundo.vim", {"commit": "46c443ee9d5854320eb965a1fdee781ba83a070e"}],
+\  ["indent-object", "michaeljsmith/vim-indent-object", {"commit": "41d700f14b3decccdde421fbfe49e95a084a2f89"}],
+\  ["janus"],
+\  ["kwbd", "rgarver/Kwbd.vim", {"commit": "3564a721c944a58915fb7d88063cfde921e01228"}],
+\  ["multiple-cursors", "terryma/vim-multiple-cursors", {"commit": "3afc475cc64479a406ce73d3333df1f67db3c73f"}],
+\  ["narrowregion", "chrisbra/NrrwRgn", {"commit": "92ba05e7d2c485c7985dcb69979cf8f24b214a8a"}],
+\  ["nerdcommenter", "scrooloose/nerdcommenter", {"commit": "285902752f7ab2052ac700a6d29b263dd5788afb"}],
+\  ["nerdtree", "scrooloose/nerdtree", {"commit": "e2a9929bbea0ec2050f2ea44b7e7bae3ccac66e6"}],
+\  ["repeat", "tpope/vim-repeat", {"commit": "070ee903245999b2b79f7386631ffd29ce9b8e9f"}],
+\  ["snipmate", "garbas/vim-snipmate", {"commit": "a9802f2351910f64b70fb10b63651e6ff6b8125e"}],
+\  ["supertab", "ervandew/supertab", {"commit": "22aac5c2cb6a8ebe906bf1495eb727717390e62e"}],
+\  ["surround", "tpope/vim-surround", {"commit": "e49d6c2459e0f5569ff2d533b4df995dd7f98313"}],
+\  ["syntastic", "vim-syntastic/syntastic", {"commit": "e1161a723a353db99780f9a9351340df7abbb106"}],
+\  ["tagbar", "majutsushi/tagbar", {"commit": "f5792732de16b8a2cc202f920e363eb413d7241d"}],
+\  ["tlib", "tomtom/tlib_vim", {"commit": "6f9d75b54478bcaab722d33cbec69d8a1fe49f32"}],
+\  ["unimpaired", "tpope/vim-unimpaired", {"commit": "3a7759075cca5b0dc29ce81f2747489b6c8e36a7"}],
+\  ["vim-addon-mw-utils", "MarcWeber/vim-addon-mw-utils", {"commit": "0c5612fa31ee434ba055e21c76f456244b3b5109"}],
+\  ["vim-gitgutter", "airblade/vim-gitgutter", {"commit": "c92f61acdc1841292b539a8515a88ed811eafa3f"}],
+\  ["vim-snippets", "honza/vim-snippets", {"commit": "d6a97c12a485da5d622c7adcbe8ab97e4425b0ca"}],
+\  ["vim-trailing-whitespace", "bronson/vim-trailing-whitespace", {"commit": "733fb64337b6da4a51c85a43450cd620d8b617b5"}],
+\  ["vimwiki", "vim-scripts/vimwiki", {"commit": "cb5c38a575bcdffa52747aef962dc9d61c7a8207"}],
+\  ["visualstar", "thinca/vim-visualstar", {"commit": "a18cd0e7a03311ac709595c1d261ed44b45c9098"}],
+\  ["vroom", "skalnik/vim-vroom", {"commit": "a92fc7a8093c25cdabe1839f03ba4a09081d9d27"}],
+\  ["webapi", "mattn/webapi-vim", {"commit": "e76f2da9a8f292a999a95ae688534f76c2dca9bd"}],
+\  ["zoomwin", "sh-dude/ZoomWin", {"commit": "355d7afcc6b3ad18081a344a5525746d3f5d8e0e"}],
+\])
 
 ""
 "" Customisations

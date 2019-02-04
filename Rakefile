@@ -79,6 +79,9 @@ task :update do
 
   puts "Updating the submodules"
   `git submodule update --init #{redirect_out}`
+
+  puts "update plugins"
+  `vim +PlugClean! +PlugUpdate +qall`
 end
 
 task :install => [:folders, :link_vim_conf_files] do
